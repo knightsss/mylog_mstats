@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <title>明朝互动内部系统</title>
+    <link href="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+    <script src="http://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
+    <script src="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/js/bootstrap.min.js"></script>
+
+    <link rel='icon' href='https://open.mingchao.com/static/images/logo.ico' type='image/x-icon' />
+    <link rel='shortcut icon' href='https://open.mingchao.com/static/images/logo.ico' type='image/x-icon' />
+    <link rel="stylesheet" href="https://open.mingchao.com/static/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://open.mingchao.com/static/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css">
+    <link rel="stylesheet" href="https://open.mingchao.com/static/css/style.css">
+    <link rel="stylesheet" href="https://open.mingchao.com/static/css/login.css">
+    <link rel="stylesheet" href="https://open.mingchao.com/static/css/theme-blue.css">
+    <link rel="stylesheet" href="https://open.mingchao.com/static/messenger/css/messenger.css">
+    <link rel="stylesheet" href="https://open.mingchao.com/static/messenger/css/messenger-theme-future.css">
+    <script src="https://open.mingchao.com/static/js/jquery.1.10.2.min.js"></script>
+
+</head>
+<body>
+<div ng-app="oauth2Module">
+    <div ng-controller="oauth2Ctrl">
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a class="nav-brand" href="#">
+                            <img src="https://open.mingchao.com/static/images/logo.png">
+                        </a>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav pull-right">
+                    <li>
+                        <a href="#" class="h4" style="margin:10px"><strong>认证系统提供</strong></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+  <form action="/login_auth/" method="post">
+
+        <div class="container oa-top">
+            <div class="row">
+                <div class="col-md-4"></div>
+                <div class="col-md-4">
+                    <div class="form-signin"  ng-show="!isLogin">
+                        <h1 class="h1 text-center" ng-bind="client_name"> </h1>
+                        <br>
+                        <div align="center">
+                            {% if error1 %}
+                                <p style="color:red">请将用户名和密码输入完整！</p>
+                            {% endif %}
+
+                            {% if error2 %}
+                                <p style="color:red">用户名密码不匹配，请重新输入！</p>
+                            {% endif %}
+                            {% if error3 %}
+                                <p style="color:red">用户名不存在或该用户名不可用！</p>
+                            {% endif %}
+                        </div>
+                        <input class="form-control" placeholder="请输入账号" ng-model="username" id="username" name="username" type="text" required/>
+                        <input class="form-control" placeholder="请输入密码" ng-model="password"  id="password" name="password" type="password" required/>
+                        <button  class="btn btn-lg btn-primary btn-block" ng-disabled="login_form.$invalid" id="submit"  >登录</button>
+                    </div>
+                </div>
+                <div class="col-md-4"></div>
+            </div>
+        </div>
+  </form>
+    </div>
+</div>
+
+<!-- 模态框（Modal） -->
+        <div aria-hidden="true"  class="modal fade bs-example-modal-sm"  id="warning-modal">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                        <h5 class="modal-title" >登陆异常！！！</h5>
+                    </div>
+                    <div class="modal-body"  id="warning-tip">
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div>
+<footer class="oa-footer">
+    Copyright &copy; 2014 MingChao.All Rights Reserved.广州明朝互动科技股份有限公司  版权所有
+</footer>
+
+<script src="https://open.mingchao.com/static/bootstrap/js/bootstrap.min.js"></script>
+<script src="https://open.mingchao.com/static/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
+<script src="https://open.mingchao.com/static/angular/angular.js"></script>
+<script src="https://open.mingchao.com/static/angular/ui-bootstrap-tpls-0.12.0.js"></script>
+
+<script>
+{#登陆判断#}
+function login(){
+
+    var username = $("#username").val();
+    var password = $("#password").val();
+    if ( !username || !password ){
+        showMsg('用户名或密码不能为空');
+        return false;
+    }
+    else{
+        window.open('main.html')
+    }
+}
+{#调用模态框#}
+function showMsg(msg){
+    $("#warning-tip").html(msg);
+    $("#warning-modal").modal("show");
+}
+</script>
+
+</body>
+</html>
+
