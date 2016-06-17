@@ -21,13 +21,7 @@
     <link rel="stylesheet" href="https://open.mingchao.com/static/messenger/css/messenger.css">
     <link rel="stylesheet" href="https://open.mingchao.com/static/messenger/css/messenger-theme-future.css">
     <script src="https://open.mingchao.com/static/js/jquery.1.10.2.min.js"></script>
-<script type="text/javascript">
-    $(document).ready(function(){
-        $("button").click(function(){
-            $("p").hide();
-        });
-    });
-</script>
+
 </head>
 <body>
 <div ng-app="oauth2Module">
@@ -49,7 +43,6 @@
                 </ul>
             </div>
         </div>
-  <form action="/login/" method="post">
 
         <div class="container oa-top">
             <div class="row">
@@ -65,41 +58,27 @@
                         <br>
                         <br>
                         <div align="center" >
-                            {% if error1 %}
-                                <p style="color:red">请将用户名和密码输入完整！</p>
-                            {% endif %}
-
-                            {% if error2 %}
-                                <p style="color:red">用户名密码不匹配，请重新输入！</p>
-                            {% endif %}
-                            {% if error3 %}
-                                <p style="color:red">用户名不存在或该用户名不可用！</p>
-                            {% endif %}
                         </div>
                         <input class="form-control" placeholder="请输入账号" ng-model="username" id="username" name="username" type="text" required/>
                         <input class="form-control" placeholder="请输入密码" ng-model="password"  id="password" name="password" type="password" required/>
-                        <button  class="btn btn-lg btn-primary btn-block" ng-disabled="login_form.$invalid" id="submit"  >登录</button>
+                        <button  class="btn btn-lg btn-primary btn-block" ng-disabled="login_form.$invalid" id="login_button" type="submit"  >登录</button>
                     </div>
                 </div>
                 <div class="col-md-4"></div>
             </div>
         </div>
-  </form>
     </div>
 </div>
-<h2>This is a heading</h2>
-<p>This is a paragraph.</p>
-<p>This is another paragraph.</p>
-<button type="button">Click me</button>
+
 <!-- 模态框（Modal） -->
         <div aria-hidden="true"  class="modal fade bs-example-modal-sm"  id="warning-modal">
             <div class="modal-dialog modal-sm">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-                        <h5 class="modal-title" >登陆异常！！！</h5>
+                        <h4 class="modal-title" >登陆异常！！！</h4>
                     </div>
-                    <div class="modal-body"  id="warning-tip">
+                    <div class="modal-body"  id="warning-tip" >
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
@@ -116,19 +95,6 @@
 
 
 <script>
-{#登陆判断#}
-function login(){
-
-    var username = $("#username").val();
-    var password = $("#password").val();
-    if ( !username || !password ){
-        showMsg('用户名或密码不能为空');
-        return false;
-    }
-    else{
-        window.open('main.html')
-    }
-}
 {#调用模态框#}
 function showMsg(msg){
     $("#warning-tip").html(msg);
@@ -136,23 +102,31 @@ function showMsg(msg){
 }
 </script>
 
+{#判断密码是否正确#}
 <script>
-{#    根据<input>的id获取设定输入框焦点离开时的操作#}
-    $('#username').blur(function(){
-{#       获取用户输入的用户名 #}
-       var input_name=$(this).val();
-{#       调用ajax提交数据 #}
-       $.ajax({
-{#                指定提交的url#}
-                url:"/login/",
-{#                指定将获取的用户名提交给login()函数里的username变量用于验证#}
-                data:{username:input_name},
-{#                指定提交的数据的格式#}
+{#    根据id获取设定输入框焦点离开时的操作#}
+    $('#login_button').click(function(){
+        var input_name=$('#username').val();
+        var input_password=$('#password').val();
+        if ( !input_name || !input_password ){
+            showMsg('用户名或密码不能为空');
+            return false;
+        }
+        $.ajax({
+                url:"/login_ajax/",
+                data:{username:input_name,password:input_password},
                 type:'POST',
-{#                success用来接收login()函数执行之后的return HttpResponse返回值#}
-                success:function(arg){
-{#                    用arg接收到返回值后通过alert将返回的内容输出到页面上#}
-                    alert(arg)
+                success:function(data){
+                    if (data.flag == 1){
+{#验证成功后，重定向到新的界面#}
+{#                        windows.open('main.html');#}
+                        window.location.href = data.redirect;
+                    }
+
+                    else{
+{#显示密码不正确的信息#}
+                        showMsg(data.message)
+                    }
                 }
             });
     });
