@@ -59,4 +59,6 @@ def login_ajax(request):
      return render(request,'login_ajax.html')
 
 def main(request):
-     return render_to_response('main.html')
+     user = request.session['login_name']
+     #通过Http请求获取数据并传到前端界面
+     return render_to_response('main.html',{'user':user})

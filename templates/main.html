@@ -3,8 +3,318 @@
 <head>
     <meta charset="UTF-8">
     <title></title>
+
+     <!-- 包含头部信息用于适应不同设备 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 包含 bootstrap 样式表 -->
+    <link rel="stylesheet" href="http://apps.bdimg.com/libs/bootstrap/3.2.0/css/bootstrap.min.css">
+
+    <link href="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="../../static/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">     <!-- 布局需要的css文件 -->
+
+    <!-- 引入 ECharts 文件 -->
+    <script src="../../static/echarts.min.js"></script>
+    {#    导入jquery#}
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.0/jquery.min.js"></script>
 </head>
 <body>
-    欢迎观临mulog系统
+
+<div class="collapse navbar-collapse" id="oa-navbar-collapse" style="background: lightsteelblue;" >
+{#头部的导航栏#}
+<ul class="nav navbar-nav ng-scope" >
+   <li class="active" style="color: black; font-size: 20px"><a href="#">Mulog系统</a></li>
+   <li><a href="/log_management" style="color: black; font-size: 20px" >日志管理</a></li>
+   <li><a href="/partition_management" style="color: black; font-size: 20px">分区管理</a></li>
+   <li><a href="#" style="color: black; font-size: 20px">生产者</a></li>
+   <li><a href="#" style="color: black; font-size: 20px">消费者</a></li>
+    <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#" style="color: black; font-size: 20px">
+            项目管理<span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu">
+            <li><a href="#" style="color: black; font-size: 18px">数据管理</a></li>
+            <li><a href="#" style="color: black; font-size: 18px">字段管理</a></li>
+            <li><a href="#" style="color: black; font-size: 18px">类型管理</a></li>
+            <li class="divider"></li>
+            <li><a href="#" style="color: black; font-size: 18px">其它管理</a></li>
+
+      </ul>
+   </li>
+{#    <li class="glyphicon glyphicon-user" style="color: rgb(0, 8, 60); font-size: 20px;"> User</li>#}
+
+</ul>
+<div  class="nav-right-margin" >
+    <ul class="nav navbar-nav navbar-right" >
+        <li><a class="glyphicon glyphicon-refresh" id="refresh_data"   style="color: black; font-size: 20px;">刷新</a></li>     <!--实现异步加载-->
+        <li><a class="glyphicon glyphicon-user"  href="#" style="color: black; font-size: 20px;">{{ user }}</a></li>
+        <li><a class="glyphicon glyphicon-off" href="/login_ajax" style="color: black; font-size: 20px;">退出</a></li>
+    </ul>
+</div>
+</div>
+
+<div class="container-fluid" id="LG">
+	<div class="row-fluid">
+		<div class="span6">
+            <h3 class="text-center">
+				集群概况
+			</h3><hr class="text-center" />
+			<p class="text-center">
+			</p>
+			<p class="lead">
+				数据表
+			</p>
+			<table class="table">
+				<thead>
+					<tr>
+						<th>项目总数</th>
+						<th>表总数</th>
+						<th>未配置入库的表</th>
+						<th>状态</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>1</td>
+						<td>1</td>
+						<td>1</td>
+                        <td>Default</td>
+					</tr>
+					<tr class="success">
+						<td>2</td>
+						<td>2</td>
+						<td>2</td>
+						<td>Approved</td>
+					</tr>
+				</tbody>
+			</table>
+			<p class="lead">
+				生产者
+			</p>
+			<table class="table">
+				<thead>
+					<tr>
+						<th>生产者总数</th>
+						<th>日志堆积异常的生产者</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>3</td>
+						<td>3</td>
+					</tr>
+                    <tr class="success">
+						<td>8</td>
+						<td>8</td>
+					</tr>
+				</tbody>
+			</table>
+			<p class="lead">
+				消费者
+			</p>
+			<table class="table">
+				<thead>
+					<tr>
+						<th>消费者总数</th>
+						<th>内存异常的消费者</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>6</td>
+						<td>6</td>
+					</tr>
+					<tr class="success">
+						<td>1</td>
+						<td>1</td>
+					</tr>
+				</tbody>
+			</table>
+            <p class="lead">
+				存储服务
+			</p>
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Hadoop集群数</th>
+						<th>Mysql机器数</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="success">
+						<td>10</td>
+						<td>10</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="span6">
+            <h3 class="text-center">
+				图表展示
+			</h3><hr class="text-center" />
+			<p class="text-center">
+			</p>
+            <div id="chart_bar" style="background: white; width: 590px;height:350px; margin-left: 100px"></div>
+
+{#            <hr class="text-center" />#}
+{#            <div style="background: white;margin-left: 100px">生产日志堆积图</div>#}
+{#            <div id="chart_pie" style="background: white; width: 590px;height:350px; margin-left: 100px"></div>#}
+
+            <hr class="text-center" />
+{#            <div style="background: white;margin-left: 100px">生产日志堆积图</div>#}
+            <div id="chart_pie2" style="background: white; width: 590px;height:350px; margin-left: 100px"></div>
+
+
+{#            <div id="user_map" style="background: white; width: 800px;height:600px; margin-left: 100px"></div>#}
+		</div>
+	</div>
+</div>
+
+{#图表显示，显示位置是id为chart1的地方#}
+<script type="text/javascript">
+            // 基于准备好的dom，初始化echarts实例
+            var myChart = echarts.init(document.getElementById('chart_bar'));
+            // 指定图表的配置项和数据
+            var option = {
+                title: {
+                    text: '集群日志堆积总量'
+                },
+                tooltip: {},
+                legend: {
+                    data:['']
+                },
+                xAxis: {
+                    data: ["M15-1服","M15-2服","M15-3服","M16-1服","M16-7服","M16-8服"]
+                },
+                yAxis: {},
+                series: [{
+                    name: '日志堆积数量',
+                    type: 'bar',
+                    data: [5, 20, 36, 17, 12, 20]
+                }]
+            };
+            // 使用刚指定的配置项和数据显示图表。
+            myChart.setOption(option);
+</script>
+
+
+<script type="text/javascript">
+            // 基于准备好的dom，初始化echarts实例
+            var myChart = echarts.init(document.getElementById('chart_pie'));
+            // 指定图表的配置项和数据
+            var option = {
+                series : [
+                    {
+                        name: '生产日志堆积图',
+                        type: 'pie',
+                        radius: '55%',
+                        data:[
+                            {value:235, name:'元宝消费日志'},
+                            {value:274, name:'管理后台日志'},
+                            {value:310, name:'充值日志'},
+                            {value:335, name:'玩家在线日志'},
+                            {value:400, name:'元宝消费排行日志'}
+                        ]
+                    }
+                ]
+            };;
+            // 使用刚指定的配置项和数据显示图表。
+            myChart.setOption(option);
+</script>
+
+<script type="text/javascript">
+            // 基于准备好的dom，初始化echarts实例
+            var myChart = echarts.init(document.getElementById('chart_pie2'));
+            var option = {
+                title : {
+                    text: '生产日志堆积图',
+                    subtext: '纯属虚构',
+                    x:'center'
+                },
+                tooltip : {
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+                },
+                legend: {
+                    orient : 'vertical',
+                    x : 'left',
+                    data:['元宝消费日志','管理后台日志','充值日志','玩家在线日志','元宝消费排行日志']
+                },
+                toolbox: {
+                    show : true,
+                    feature : {
+                        mark : {show: true},
+                        dataView : {show: true, readOnly: false},
+                        magicType : {
+                            show: true,
+                            type: ['pie', 'funnel'],
+                            option: {
+                                funnel: {
+                                    x: '25%',
+                                    width: '50%',
+                                    funnelAlign: 'left',
+                                    max: 1548
+                                }
+                            }
+                        },
+                        restore : {show: true},
+                        saveAsImage : {show: true}
+                    }
+                },
+                calculable : true,
+                series : [
+                    {
+                        name:'访问来源',
+                        type:'pie',
+                        radius : '55%',
+                        center: ['50%', '60%'],
+                        data:[
+                            {value:335, name:'元宝消费日志'},
+                            {value:310, name:'管理后台日志'},
+                            {value:234, name:'充值日志'},
+                            {value:135, name:'玩家在线日志'},
+                            {value:1548, name:'元宝消费排行日志'}
+                        ]
+                    }
+                ]
+            };
+            myChart.setOption(option);
+
+</script>
+
+<script>
+
+{#    function refresh(){#}
+{#        alert('hello');#}
+{#    }#}
+     $('#refresh2').click(function(){
+            alert('hello');
+    });
+</script>
+
+<script>
+{#    根据id获取设定输入框焦点离开时的操作#}
+    $('#refresh_data').click(function(){
+        $.ajax({
+{#                url:"http://www.tuling123.com/openapi/api?key=f3eca32b86387b99b94e922b70a0921b&info=你好",#}
+
+{#                data:{username:input_name,password:input_password},#}
+{#                预留的http接口调用数据#}
+                url:'http://www.tuling123.com/openapi/api?key=f3eca32b86387b99b94e922b70a0921b&info=%E4%BD%A0%E5%A5%BD',
+                type:'GET',
+                success:function(data){
+                        alert(data)
+                }
+            });
+    });
+</script>
+
+{#表格及图片图表#}
+    <!-- JavaScript 放置在文档最后面可以使页面加载速度更快 -->
+    <!-- 可选: 包含 jQuery 库 -->
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <!-- 可选: 合并了 Bootstrap JavaScript 插件 -->
+    <script src="http://apps.bdimg.com/libs/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 </body>
+
 </html>
