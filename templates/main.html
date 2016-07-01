@@ -46,7 +46,7 @@
 </ul>
 <div  class="nav-right-margin" >
     <ul class="nav navbar-nav navbar-right" >
-        <li><a class="glyphicon glyphicon-refresh" id="refresh_data"   style="color: black; font-size: 20px;">刷新</a></li>     <!--实现异步加载-->
+        <li><a class="glyphicon glyphicon-refresh" href="#" id="refresh_data" style="color: black; font-size: 20px;">刷新</a></li>     <!--实现异步加载-->
         <li><a class="glyphicon glyphicon-user"  href="#" style="color: black; font-size: 20px;">{{ user }}</a></li>
         <li><a class="glyphicon glyphicon-off" href="/login_ajax" style="color: black; font-size: 20px;">退出</a></li>
     </ul>
@@ -142,7 +142,7 @@
 				</thead>
 				<tbody>
 					<tr class="success">
-						<td>10</td>
+						<td id="hadoop_service_id"></td>
 						<td>10</td>
 					</tr>
 				</tbody>
@@ -173,6 +173,8 @@
 {#图表显示，显示位置是id为chart1的地方#}
 <script type="text/javascript">
             // 基于准备好的dom，初始化echarts实例
+            var data_meta = ["M15-1服","M15-2服","M15-3服","M16-1服","M16-7服","M16-8服"]
+            var new_data = [100, 20, 36, 17, 12, 20]
             var myChart = echarts.init(document.getElementById('chart_bar'));
             // 指定图表的配置项和数据
             var option = {
@@ -184,13 +186,13 @@
                     data:['']
                 },
                 xAxis: {
-                    data: ["M15-1服","M15-2服","M15-3服","M16-1服","M16-7服","M16-8服"]
+                    data: data_meta
                 },
                 yAxis: {},
                 series: [{
                     name: '日志堆积数量',
                     type: 'bar',
-                    data: [5, 20, 36, 17, 12, 20]
+                    data: new_data
                 }]
             };
             // 使用刚指定的配置项和数据显示图表。
@@ -294,18 +296,33 @@
 
 <script>
 {#    根据id获取设定输入框焦点离开时的操作#}
-    $('#refresh_data').click(function(){
-        $.ajax({
-{#                url:"http://www.tuling123.com/openapi/api?key=f3eca32b86387b99b94e922b70a0921b&info=你好",#}
+    $(document).ready(function(){
+{#    $('#refresh_data').click(function(){#}
 
+        $.get("http://www.tuling123.com/openapi/api?key=f3eca32b86387b99b94e922b70a0921b&info=男神",function(data){
+            $("#hadoop_service_id").text(data.text);
+
+        });
+{#        $.ajax({#}
+{#                url:"http://www.tuling123.com/openapi/api?key=f3eca32b86387b99b94e922b70a0921b&info=你好",#}
+{##}
 {#                data:{username:input_name,password:input_password},#}
 {#                预留的http接口调用数据#}
-                url:'http://www.tuling123.com/openapi/api?key=f3eca32b86387b99b94e922b70a0921b&info=%E4%BD%A0%E5%A5%BD',
-                type:'GET',
-                success:function(data){
-                        alert(data)
-                }
-            });
+{#                url:'http://www.tuling123.com/openapi/api?key=f3eca32b86387b99b94e922b70a0921b&info=%E4%BD%A0%E5%A5%BD',#}
+{#                type:'GET',#}
+{#                success:function(data){#}
+{#                        alert(data)#}
+{#                }#}
+{#            });#}
+    });
+</script>
+
+<script>
+    $('#refresh_data').click(function(){
+
+        $.get("http://www.tuling123.com/openapi/api?key=f3eca32b86387b99b94e922b70a0921b&info=女神",function(data){
+            $("#hadoop_service_id").text(data.text);
+        });
     });
 </script>
 
