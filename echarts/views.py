@@ -12,7 +12,7 @@ from django.http import HttpResponse
 
 
 def echarts(request):
-    return render_to_response('Test_ECharts.html')
+    return render_to_response('Test_ECharts2.html')
 
 def air(request):
     return render_to_response('Test_air.html')

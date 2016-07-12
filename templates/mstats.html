@@ -1,0 +1,1446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+         <!-- 包含头部信息用于适应不同设备 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 包含 bootstrap 样式表 -->
+{#    <link rel="stylesheet" href="http://apps.bdimg.com/libs/bootstrap/3.2.0/css/bootstrap.min.css">#}
+
+    <link href="../../static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="../../static/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">     <!-- 布局需要的css文件 -->
+
+    <!-- 引入 ECharts 文件 -->
+    <script src="../../static/echarts.min.js"></script>
+    {#    导入jquery#}
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.0/jquery.min.js"></script>
+</head>
+<body>
+
+<div class="container-fluid">
+	<div class="row-fluid">
+		<div class="span12">
+			<h2>
+				time
+			</h2>
+            <hr class="text-center" />
+			<div class="row-fluid">
+				<div class="col-xs-3 span3">
+					<p class="lead">
+						<h3>wall</h3>
+					</p>
+                    <p id="time_wall" style="background: white; width: 350px;height:250px;"></p>
+				</div>
+				<div class="col-xs-3 span3">
+					<p class="lead">
+						<h3>run</h3>
+					</p>
+                    <p id="time_run" style="background: white; width: 350px;height:250px;"></p>
+				</div>
+				<div class="col-xs-3 span3">
+				</div>
+				<div class="col-xs-3 span3">
+				</div>
+			</div>
+			<h2>
+				memory_size
+			</h2>
+            <hr class="text-center" />
+			<div class="row-fluid">
+				<div class="col-xs-3 span3">
+					<p class="lead">
+						<h3>total</h3>
+					</p>
+                    <p id="memory_size_total" style="background: white; width: 350px;height:250px;"></p>
+				</div>
+				<div class="col-xs-3 span3">
+					<p class="lead">
+						<h3>processes</h3>
+					</p>
+                    <p id="memory_size_processes" style="background: white; width: 350px;height:250px;"></p>
+				</div>
+				<div class="col-xs-3 span3">
+					<p class="lead">
+						<h3>ets</h3>
+					</p>
+                    <p id="memory_size_ets" style="background: white; width: 350px;height:250px;"></p>
+				</div>
+				<div class="col-xs-3 span3">
+					<p class="lead">
+						<h3>binary</h3>
+					</p>
+                    <p id="memory_size_binary" style="background: white; width: 350px;height:250px;"></p>
+				</div>
+			</div>
+			<h2>
+				port_io
+			</h2>
+            <hr class="text-center" />
+			<div class="row-fluid">
+				<div class="col-xs-3 span3">
+					<p class="lead">
+						<h3>rx</h3>
+					</p>
+                    <p id="port_io_rx" style="background: white; width: 350px;height:250px;"></p>
+				</div>
+				<div class="col-xs-3 span3">
+					<p class="lead">
+						<h3>tx</h3>
+					</p>
+                    <p id="port_io_tx" style="background: white; width: 350px;height:250px;"></p>
+				</div>
+				<div class="col-xs-3 span3">
+				</div>
+				<div class="col-xs-3 span3">
+				</div>
+			</div>
+			<h2>
+				gc
+			</h2>
+            <hr class="text-center" />
+			<div class="row-fluid">
+				<div class="col-xs-3 span3">
+					<p class="lead">
+						<h3>count</h3>
+					</p>
+                    <p id="gc_count" style="background: white; width: 350px;height:250px;"></p>
+				</div>
+				<div class="col-xs-3 span3">
+					<p class="lead">
+						<h3>words</h3>
+					</p>
+                    <p id="gc_words" style="background: white; width: 350px;height:250px;"></p>
+				</div>
+				<div class="col-xs-3 span3">
+				</div>
+				<div class="col-xs-3 span3">
+				</div>
+			</div>
+			<h2>
+				sched_count
+			</h2>
+            <hr class="text-center" />
+			<div class="row-fluid">
+				<div class="col-xs-3 span3">
+					<p class="lead">
+						<h3>online</h3>
+					</p>
+                    <p id="sched_count_online" style="background: white; width: 350px;height:250px;"></p>
+				</div>
+				<div class="col-xs-3 span3">
+				</div>
+				<div class="col-xs-3 span3">
+				</div>
+				<div class="col-xs-3 span3">
+				</div>
+			</div>
+			<h2>
+				sched_reds
+			</h2>
+            <hr class="text-center" />
+			<div class="row-fluid">
+				<div class="col-xs-3 span3">
+					<p class="lead">
+						<h3>total</h3>
+					</p>
+                    <p id="sched_reds_total" style="background: white; width: 350px;height:250px;"></p>
+				</div>
+				<div class="col-xs-3 span3">
+				</div>
+				<div class="col-xs-3 span3">
+				</div>
+				<div class="col-xs-3 span3">
+				</div>
+			</div>
+			<h2>
+				sched
+			</h2>
+            <hr class="text-center" />
+			<div class="row-fluid">
+				<div class="col-xs-3 span3">
+					<p class="lead">
+						<h3>run_queue</h3>
+					</p>
+                    <p id="sched_run_queue" style="background: white; width: 350px;height:250px;"></p>
+				</div>
+				<div class="col-xs-3 span3">
+				</div>
+				<div class="col-xs-3 span3">
+				</div>
+				<div class="col-xs-3 span3">
+				</div>
+			</div>
+			<h2>
+				procs
+			</h2>
+            <hr class="text-center" />
+			<div class="row-fluid">
+				<div class="col-xs-3 span3">
+					<p class="lead">
+						<h3>count</h3>
+					</p>
+                    <p id="procs_count" style="background: white; width: 350px;height:250px;"></p>
+				</div>
+				<div class="col-xs-3 span3">
+				</div>
+				<div class="col-xs-3 span3">
+				</div>
+				<div class="col-xs-3 span3">
+				</div>
+			</div>
+			<h2>
+				proc_message_queue
+			</h2>
+            <hr class="text-center" />
+			<div class="row-fluid">
+				<div class="col-xs-3 span3">
+					<p class="lead">
+						<h3>total</h3>
+					</p>
+                    <p id="proc_message_queue_total" style="background: white; width: 350px;height:250px;"></p>
+				</div>
+				<div class="col-xs-3 span3">
+					<p class="lead">
+						<h3>max</h3>
+					</p>
+                    <p id="proc_message_queue_max" style="background: white; width: 350px;height:250px;"></p>
+				</div>
+				<div class="col-xs-3 span3">
+				</div>
+				<div class="col-xs-3 span3">
+				</div>
+			</div>
+			<h2>
+				proc_heap
+			</h2>
+            <hr class="text-center" />
+			<div class="row-fluid">
+				<div class="col-xs-3 span3">
+					<p>
+						<h3>max</h3>
+					</p>
+                    <p id="proc_heap_max" style="background: white; width: 350px;height:250px;"></p>
+				</div>
+				<div class="col-xs-3 span3">
+				</div>
+				<div class="col-xs-3 span3">
+				</div>
+				<div class="col-xs-3 span3">
+				</div>
+			</div>
+			<h2>
+				error_logger
+			</h2>
+            <hr class="text-center" />
+			<div class="row-fluid">
+				<div class="col-xs-3 span3">
+					<p class="lead">
+						<h3>message_queue_len</h3>
+					</p>
+                    <p id="error_logger_message_queue_len" style="background: white; width: 350px;height:250px;"></p>
+				</div>
+				<div class="col-xs-3 span3">
+				</div>
+				<div class="col-xs-3 span3">
+				</div>
+				<div class="col-xs-3 span3">
+				</div>
+			</div>
+			<h2>
+				ports
+			</h2>
+            <hr class="text-center" />
+			<div class="row-fluid">
+				<div class="col-xs-3 span3">
+					<p class="lead">
+						<h3>count</h3>
+					</p>
+                    <p id="ports_count" style="background: white; width: 350px;height:250px;"></p>
+				</div>
+				<div class="col-xs-3 span3">
+				</div>
+				<div class="col-xs-3 span3">
+				</div>
+				<div class="col-xs-3 span3">
+				</div>
+			</div>
+			<h2>
+				memory_alloc
+			</h2>
+            <hr class="text-center" />
+			<div class="row-fluid">
+				<div class="col-xs-3 span3">
+					<p class="lead">
+						<h3>usage</h3>
+					</p>
+                    <p id="memory_alloc_usage" style="background: white; width: 350px;height:250px;"></p>
+				</div>
+				<div class="col-xs-3 span3">
+				</div>
+				<div class="col-xs-3 span3">
+				</div>
+				<div class="col-xs-3 span3">
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+{#time#}
+<script type="text/javascript">
+
+var dom_time_wall = document.getElementById("time_wall");
+var myChart_time_wall = echarts.init(dom_time_wall);
+{#var app_cpu = {};#}
+{#option_cpu = null;#}
+    option_time_wall = {
+    title: {
+        text: ''
+    },
+    tooltip: {},
+    legend: {
+        data:['数量(M)']
+    },
+    xAxis: {
+        data: []
+    },
+    yAxis: {},
+    series: [{
+        name: '数量(M)',
+        type: 'line',
+        data: []
+    }]
+};
+
+{#        $('#refresh_button').click(function(){#}
+    myChart_time_wall.showLoading();
+    function update_time_wall() {
+        $(document).ready(function () {
+            $.ajax({
+                url: "/get_mstats/",
+                type: 'GET',
+                {#                返回json格式的数据#}
+                success: function (data) {
+                    myChart_time_wall.hideLoading();
+                    {#                    创建两个数组#}
+                    Arr1 = new Array()
+                    Arr2 = new Array()
+                    {#                    遍历数组并添加值#}
+                    for (var i = 0; i < data.info.length; i++) {
+                        Arr1.push(data.info[i].mtime)
+                        Arr2.push(data.info[i].time.wall/1000000)
+                    }
+                    myChart_time_wall.setOption({
+                        xAxis: {
+                            data: Arr1
+                        },
+                        series: [{
+                            // 根据名字对应到相应的系列
+                            name: '数量',
+                            data: Arr2
+                        }]
+                    });
+                }
+            });
+        });
+    }
+    setInterval("update_time_wall()",3000);
+    if (option_time_wall && typeof option_time_wall === "object") {
+                    myChart_time_wall.setOption(option_time_wall, true);
+                    }
+</script>
+
+<script type="text/javascript">
+
+        var dom_time_run = document.getElementById("time_run");
+        var myChart_time_run = echarts.init(dom_time_run);
+            option_time_run = {
+            title: {
+                text: ''
+            },
+            tooltip: {},
+            legend: {
+                data:['单位(K)']
+            },
+            xAxis: {
+                data: []
+            },
+            yAxis: {},
+            series: [{
+                name: '单位(K)',
+                type: 'line',
+                data: []
+            }]
+        };
+        myChart_time_run.showLoading();
+    function update_time_run() {
+{#        myChart_pm.showLoading();#}
+        $(document).ready(function () {
+            $.ajax({
+                url: "/get_mstats/",
+                type: 'GET',
+                success: function (data) {
+                    myChart_time_run.hideLoading();
+                    Arr1 = new Array()
+                    Arr2 = new Array()
+                    for (var i = 0; i < data.info.length; i++) {
+                        Arr1.push(data.info[i].mtime)
+                        Arr2.push(data.info[i].time.run/1000)
+                    }
+                    myChart_time_run.setOption({
+                        xAxis: {
+                            data: Arr1
+                        },
+                        series: [{
+                            name: '数量',
+                            data: Arr2
+                        }]
+                    });
+                }
+            });
+        });
+    }
+        setInterval("update_time_run()",5000);
+        if (option_time_run && typeof option_time_run === "object") {
+                        myChart_time_run.setOption(option_time_run, true);
+                        }
+</script>
+
+
+{#memory_size#}
+<script type="text/javascript">
+
+        var dom_memory_size_total = document.getElementById("memory_size_total");
+        var myChart_memory_size_total = echarts.init(dom_memory_size_total);
+            option_memory_size_total = {
+            title: {
+                text: ''
+            },
+            tooltip: {},
+            legend: {
+                data:['单位(M)']
+            },
+            xAxis: {
+                data: []
+            },
+            yAxis: {},
+            series: [{
+                name: '单位(M)',
+                type: 'line',
+                data: []
+            }]
+        };
+        myChart_memory_size_total.showLoading();
+        function update_memory_size_total(){
+            $(document).ready(function(){
+            $.ajax({
+                    url:"/get_mstats/",
+                    type:'GET',
+                    success:function(data){
+                        myChart_memory_size_total.hideLoading();
+                        Arr1 = new Array()
+                        Arr2 = new Array()
+                        for (var i=0;i<data.info.length;i++)
+                        {
+                            Arr1.push(data.info[i].mtime)
+                            Arr2.push(data.info[i].memory_size.total/1000000)
+                        }
+                        myChart_memory_size_total.setOption({
+                            xAxis: {
+                                data: Arr1
+                            },
+                            series: [{
+                                name: '数量',
+                                data: Arr2
+                            }]
+                        });
+                    }
+                });
+            });
+        }
+        setInterval("update_memory_size_total()",5000);
+        if (option_memory_size_total && typeof option_memory_size_total === "object") {
+                        myChart_memory_size_total.setOption(option_memory_size_total, true);
+                        }
+</script>
+
+<script type="text/javascript">
+
+        var dom_memory_size_processes = document.getElementById("memory_size_processes");
+        var myChart_memory_size_processes = echarts.init(dom_memory_size_processes);
+            option_memory_size_processes = {
+            title: {
+                text: ''
+            },
+            tooltip: {},
+            legend: {
+                data:['单位(M)']
+            },
+            xAxis: {
+                data: []
+            },
+            yAxis: {},
+            series: [{
+                name: '单位(M)',
+                type: 'line',
+                data: []
+            }]
+        };
+        myChart_memory_size_processes.showLoading();
+        function update_memory_size_processes(){
+            $(document).ready(function(){
+            $.ajax({
+                    url:"/get_mstats/",
+                    type:'GET',
+                    success:function(data){
+                        myChart_memory_size_processes.hideLoading();
+                        Arr1 = new Array()
+                        Arr2 = new Array()
+                        for (var i=0;i<data.info.length;i++)
+                        {
+                            Arr1.push(data.info[i].mtime)
+                            Arr2.push(data.info[i].memory_size.processes/1000000)
+                        }
+                        myChart_memory_size_processes.setOption({
+                            xAxis: {
+                                data: Arr1
+                            },
+                            series: [{
+                                name: '单位',
+                                data: Arr2
+                            }]
+                        });
+                    }
+                });
+            });
+        }
+        setInterval("update_memory_size_processes()",5000);
+        if (option_memory_size_processes && typeof option_memory_size_processes === "object") {
+                        myChart_memory_size_processes.setOption(option_memory_size_processes, true);
+                        }
+</script>
+
+<script type="text/javascript">
+
+        var dom_memory_size_ets = document.getElementById("memory_size_ets");
+        var myChart_memory_size_ets = echarts.init(dom_memory_size_ets);
+            option_memory_size_ets = {
+            title: {
+                text: ''
+            },
+            tooltip: {},
+            legend: {
+                data:['单位(M)']
+            },
+            xAxis: {
+                data: []
+            },
+            yAxis: {},
+            series: [{
+                name: '单位(M)',
+                type: 'line',
+                data: []
+            }]
+        };
+        myChart_memory_size_ets.showLoading();
+        function update_memory_size_ets(){
+            $(document).ready(function(){
+            $.ajax({
+                    url:"/get_mstats/",
+                    type:'GET',
+                    success:function(data){
+                        myChart_memory_size_ets.hideLoading();
+                        Arr1 = new Array()
+                        Arr2 = new Array()
+                        for (var i=0;i<data.info.length;i++)
+                        {
+                            Arr1.push(data.info[i].mtime)
+                            Arr2.push(data.info[i].memory_size.ets/1000000)
+                        }
+                        myChart_memory_size_ets.setOption({
+                            xAxis: {
+                                data: Arr1
+                            },
+                            series: [{
+                                name: '数量',
+                                data: Arr2
+                            }]
+                        });
+                    }
+                });
+            });
+        }
+        setInterval("update_memory_size_ets()",5000);
+        if (option_memory_size_ets && typeof option_memory_size_ets === "object") {
+                        myChart_memory_size_ets.setOption(option_memory_size_ets, true);
+                        }
+</script>
+
+<script type="text/javascript">
+
+        var dom_memory_size_binary = document.getElementById("memory_size_binary");
+        var myChart_memory_size_binary = echarts.init(dom_memory_size_binary);
+            option_memory_size_binary = {
+            title: {
+                text: ''
+            },
+            tooltip: {},
+            legend: {
+                data:['单位(M)']
+            },
+            xAxis: {
+                data: []
+            },
+            yAxis: {},
+            series: [{
+                name: '单位(M)',
+                type: 'line',
+                data: []
+            }]
+        };
+        myChart_memory_size_binary.showLoading();
+        function update_memory_size_binary(){
+            $(document).ready(function(){
+            $.ajax({
+                    url:"/get_mstats/",
+                    type:'GET',
+                    success:function(data){
+                        myChart_memory_size_binary.hideLoading();
+                        Arr1 = new Array()
+                        Arr2 = new Array()
+                        for (var i=0;i<data.info.length;i++)
+                        {
+                            Arr1.push(data.info[i].mtime)
+                            Arr2.push(data.info[i].memory_size.binary/1000000)
+                        }
+                        myChart_memory_size_binary.setOption({
+                            xAxis: {
+                                data: Arr1
+                            },
+                            series: [{
+                                name: '数量',
+                                data: Arr2
+                            }]
+                        });
+                    }
+                });
+            });
+        }
+        setInterval("update_memory_size_binary()",5000);
+        if (option_memory_size_binary && typeof option_memory_size_binary === "object") {
+                        myChart_memory_size_binary.setOption(option_memory_size_binary, true);
+                        }
+</script>
+
+
+{#port_io#}
+<script type="text/javascript">
+
+        var dom_port_io_rx = document.getElementById("port_io_rx");
+        var myChart_port_io_rx = echarts.init(dom_port_io_rx);
+            option_port_io_rx = {
+            title: {
+                text: ''
+            },
+            tooltip: {},
+            legend: {
+                data:['单位(M)']
+            },
+            xAxis: {
+                data: []
+            },
+            yAxis: {},
+            series: [{
+                name: '单位(M)',
+                type: 'line',
+                data: []
+            }]
+        };
+        myChart_port_io_rx.showLoading();
+        function update_port_io_rx(){
+            $(document).ready(function(){
+            $.ajax({
+                    url:"/get_mstats/",
+                    type:'GET',
+                    success:function(data){
+                        myChart_port_io_rx.hideLoading();
+                        Arr1 = new Array()
+                        Arr2 = new Array()
+                        for (var i=0;i<data.info.length;i++)
+                        {
+                            Arr1.push(data.info[i].mtime)
+                            Arr2.push(data.info[i].port_io.rx/1000000)
+                        }
+                        myChart_port_io_rx.setOption({
+                            xAxis: {
+                                data: Arr1
+                            },
+                            series: [{
+                                name: '数量',
+                                data: Arr2
+                            }]
+                        });
+                    }
+                });
+            });
+        }
+        setInterval("update_port_io_rx()",5000);
+        if (option_port_io_rx && typeof option_port_io_rx === "object") {
+                        myChart_port_io_rx.setOption(option_port_io_rx, true);
+                        }
+</script>
+
+<script type="text/javascript">
+
+        var dom_port_io_tx = document.getElementById("port_io_tx");
+        var myChart_port_io_tx = echarts.init(dom_port_io_tx);
+            option_port_io_tx = {
+            title: {
+                text: ''
+            },
+            tooltip: {},
+            legend: {
+                data:['单位(M)']
+            },
+            xAxis: {
+                data: []
+            },
+            yAxis: {},
+            series: [{
+                name: '单位(M)',
+                type: 'line',
+                data: []
+            }]
+        };
+        myChart_port_io_tx.showLoading();
+        function update_port_io_tx(){
+            $(document).ready(function(){
+            $.ajax({
+                    url:"/get_mstats/",
+                    type:'GET',
+                    success:function(data){
+                        myChart_port_io_tx.hideLoading();
+                        Arr1 = new Array()
+                        Arr2 = new Array()
+                        for (var i=0;i<data.info.length;i++)
+                        {
+                            Arr1.push(data.info[i].mtime)
+                            Arr2.push(data.info[i].port_io.tx/1000000)
+                        }
+                        myChart_port_io_tx.setOption({
+                            xAxis: {
+                                data: Arr1
+                            },
+                            series: [{
+                                name: '数',
+                                data: Arr2
+                            }]
+                        });
+                    }
+                });
+            });
+        }
+        setInterval("update_port_io_tx()",5000);
+        if (option_port_io_tx && typeof option_port_io_tx === "object") {
+                        myChart_port_io_tx.setOption(option_port_io_tx, true);
+                        }
+</script>
+
+
+{#gc--"gc":{"count":17391,"words":60954565},#}
+<script type="text/javascript">
+
+{#        var dom_gc_count = document.getElementById("gc_count");#}
+        var myChart_gc_count = echarts.init(document.getElementById("gc_count"));
+            option_gc_count = {
+            title: {
+                text: ''
+            },
+            tooltip: {},
+            legend: {
+                data:['单位(K)']
+            },
+            xAxis: {
+                data: []
+            },
+            yAxis: {},
+            series: [{
+                name: '单位(K)',
+                type: 'line',
+                data: []
+            }]
+        };
+        myChart_gc_count.showLoading();
+        function update_gc_count(){
+            $(document).ready(function(){
+            $.ajax({
+                    url:"/get_mstats/",
+                    type:'GET',
+                    success:function(data){
+                        myChart_gc_count.hideLoading();
+                        Arr1 = new Array()
+                        Arr2 = new Array()
+                        for (var i=0;i<data.info.length;i++)
+                        {
+                            Arr1.push(data.info[i].mtime)
+                            Arr2.push(data.info[i].gc.count/1000)
+                        }
+                        myChart_gc_count.setOption({
+                            xAxis: {
+                                data: Arr1
+                            },
+                            series: [{
+                                name: '数量',
+                                data: Arr2
+                            }]
+                        });
+                    }
+                });
+            });
+        }
+        setInterval("update_gc_count()",5000);
+        if (option_gc_count && typeof option_gc_count === "object") {
+                        myChart_gc_count.setOption(option_gc_count, true);
+                        }
+</script>
+
+<script type="text/javascript">
+
+        var myChart_gc_words = echarts.init(document.getElementById("gc_words"));
+            option_gc_words = {
+            title: {
+                text: ''
+            },
+            tooltip: {},
+            legend: {
+                data:['单位(M)']
+            },
+            xAxis: {
+                data: []
+            },
+            yAxis: {},
+            series: [{
+                name: '单位(M)',
+                type: 'line',
+                data: []
+            }]
+        };
+        myChart_gc_words.showLoading();
+        function update_gc_words(){
+            $(document).ready(function(){
+            $.ajax({
+                    url:"/get_mstats/",
+                    type:'GET',
+                    success:function(data){
+                        myChart_gc_words.hideLoading();
+                        Arr1 = new Array()
+                        Arr2 = new Array()
+                        for (var i=0;i<data.info.length;i++)
+                        {
+                            Arr1.push(data.info[i].mtime)
+                            Arr2.push(data.info[i].gc.words/1000000)
+                        }
+                        myChart_gc_words.setOption({
+                            xAxis: {
+                                data: Arr1
+                            },
+                            series: [{
+                                name: '数',
+                                data: Arr2
+                            }]
+                        });
+                    }
+                });
+            });
+        }
+        setInterval("update_gc_words()",5000);
+        if (option_gc_words && typeof option_gc_words === "object") {
+                        myChart_gc_words.setOption(option_gc_words, true);
+                        }
+</script>
+
+
+{#sched_count#}
+<script type="text/javascript">
+
+        var myChart_sched_count_online = echarts.init(document.getElementById("sched_count_online"));
+            option_sched_count_online = {
+            title: {
+                text: ''
+            },
+            tooltip: {},
+            legend: {
+                data:['单位(个)']
+            },
+            xAxis: {
+                data: []
+            },
+            yAxis: {},
+            series: [{
+                name: '单位(个)',
+                type: 'line',
+                data: []
+            }]
+        };
+        myChart_sched_count_online.showLoading();
+        function update_sched_count_online(){
+            $(document).ready(function(){
+            $.ajax({
+                    url:"/get_mstats/",
+                    type:'GET',
+                    success:function(data){
+                        myChart_sched_count_online.hideLoading();
+                        Arr1 = new Array()
+                        Arr2 = new Array()
+                        for (var i=0;i<data.info.length;i++)
+                        {
+                            Arr1.push(data.info[i].mtime)
+                            Arr2.push(data.info[i].sched_count.online)
+                        }
+                        myChart_sched_count_online.setOption({
+                            xAxis: {
+                                data: Arr1
+                            },
+                            series: [{
+                                name: '数量',
+                                data: Arr2
+                            }]
+                        });
+                    }
+                });
+            });
+        }
+        setInterval("update_sched_count_online()",5000);
+        if (option_sched_count_online && typeof option_sched_count_online === "object") {
+                        myChart_sched_count_online.setOption(option_sched_count_online, true);
+                        }
+</script>
+
+
+{#sched_reds#}
+<script type="text/javascript">
+
+        var myChart_sched_reds_total = echarts.init(document.getElementById("sched_reds_total"));
+            option_sched_reds_total = {
+            title: {
+                text: ''
+            },
+            tooltip: {},
+            legend: {
+                data:['单位(M)']
+            },
+            xAxis: {
+                data: []
+            },
+            yAxis: {},
+            series: [{
+                name: '单位(M)',
+                type: 'line',
+                data: []
+            }]
+        };
+        myChart_sched_reds_total.showLoading();
+        function update_sched_reds_total(){
+            $(document).ready(function(){
+            $.ajax({
+                    url:"/get_mstats/",
+                    type:'GET',
+                    success:function(data){
+                        myChart_sched_reds_total.hideLoading();
+                        Arr1 = new Array()
+                        Arr2 = new Array()
+                        for (var i=0;i<data.info.length;i++)
+                        {
+                            Arr1.push(data.info[i].mtime)
+                            Arr2.push(data.info[i].sched_reds.total/1000000)
+                        }
+                        myChart_sched_reds_total.setOption({
+                            xAxis: {
+                                data: Arr1
+                            },
+                            series: [{
+                                name: '数量',
+                                data: Arr2
+                            }]
+                        });
+                    }
+                });
+            });
+        }
+        setInterval("update_sched_reds_total()",5000);
+        if (option_sched_reds_total && typeof option_sched_reds_total === "object") {
+                        myChart_sched_reds_total.setOption(option_sched_reds_total, true);
+                        }
+</script>
+
+
+{#sched#}
+<script type="text/javascript">
+
+        var myChart_sched_run_queue = echarts.init(document.getElementById("sched_run_queue"));
+            option_sched_run_queue = {
+            title: {
+                text: ''
+            },
+            tooltip: {},
+            legend: {
+                data:['单位(个)']
+            },
+            xAxis: {
+                data: []
+            },
+            yAxis: {},
+            series: [{
+                name: '单位(个)',
+                type: 'line',
+                data: []
+            }]
+        };
+        myChart_sched_run_queue.showLoading();
+        function update_sched_run_queue(){
+            $(document).ready(function(){
+            $.ajax({
+                    url:"/get_mstats/",
+                    type:'GET',
+                    success:function(data){
+                        myChart_sched_run_queue.hideLoading();
+                        Arr1 = new Array()
+                        Arr2 = new Array()
+                        for (var i=0;i<data.info.length;i++)
+                        {
+                            Arr1.push(data.info[i].mtime)
+                            Arr2.push(data.info[i].sched.run_queue)
+                        }
+                        myChart_sched_run_queue.setOption({
+                            xAxis: {
+                                data: Arr1
+                            },
+                            series: [{
+                                name: '数量',
+                                data: Arr2
+                            }]
+                        });
+                    }
+                });
+            });
+        }
+        setInterval("update_sched_run_queue()",5000);
+        if (option_sched_run_queue && typeof option_sched_run_queue === "object") {
+                        myChart_sched_run_queue.setOption(option_sched_run_queue, true);
+                        }
+</script>
+
+
+{#procs#}
+<script type="text/javascript">
+
+        var myChart_procs_count = echarts.init(document.getElementById("procs_count"));
+            option_procs_count = {
+            title: {
+                text: ''
+            },
+            tooltip: {},
+            legend: {
+                data:['单位(个)']
+            },
+            xAxis: {
+                data: []
+            },
+            yAxis: {},
+            series: [{
+                name: '单位(个)',
+                type: 'line',
+                data: []
+            }]
+        };
+        myChart_procs_count.showLoading();
+        function update_procs_count(){
+            $(document).ready(function(){
+            $.ajax({
+                    url:"/get_mstats/",
+                    type:'GET',
+                    success:function(data){
+                        myChart_procs_count.hideLoading();
+                        Arr1 = new Array()
+                        Arr2 = new Array()
+                        for (var i=0;i<data.info.length;i++)
+                        {
+                            Arr1.push(data.info[i].mtime)
+                            Arr2.push(data.info[i].procs.count)
+                        }
+                        myChart_procs_count.setOption({
+                            xAxis: {
+                                data: Arr1
+                            },
+                            series: [{
+                                name: '数量',
+                                data: Arr2
+                            }]
+                        });
+                    }
+                });
+            });
+        }
+        setInterval("update_procs_count()",5000);
+        if (option_procs_count && typeof option_procs_count === "object") {
+                        myChart_procs_count.setOption(option_procs_count, true);
+                        }
+</script>
+
+
+{#proc_message_queue#}
+<script type="text/javascript">
+
+        var myChart_proc_message_queue_total = echarts.init(document.getElementById("proc_message_queue_total"));
+            option_proc_message_queue_total = {
+            title: {
+                text: ''
+            },
+            tooltip: {},
+            legend: {
+                data:['单位(个)']
+            },
+            xAxis: {
+                data: []
+            },
+            yAxis: {},
+            series: [{
+                name: '单位(个)',
+                type: 'line',
+                data: []
+            }]
+        };
+        myChart_proc_message_queue_total.showLoading();
+        function update_proc_message_queue_total(){
+            $(document).ready(function(){
+            $.ajax({
+                    url:"/get_mstats/",
+                    type:'GET',
+                    success:function(data){
+                        myChart_proc_message_queue_total.hideLoading();
+                        Arr1 = new Array()
+                        Arr2 = new Array()
+                        for (var i=0;i<data.info.length;i++)
+                        {
+                            Arr1.push(data.info[i].mtime)
+                            Arr2.push(data.info[i].proc_message_queue.total)
+                        }
+                        myChart_proc_message_queue_total.setOption({
+                            xAxis: {
+                                data: Arr1
+                            },
+                            series: [{
+                                name: '数量',
+                                data: Arr2
+                            }]
+                        });
+                    }
+                });
+            });
+        }
+        setInterval("update_proc_message_queue_total()",5000);
+        if (option_proc_message_queue_total && typeof option_proc_message_queue_total === "object") {
+                        myChart_proc_message_queue_total.setOption(option_proc_message_queue_total, true);
+                        }
+</script>
+
+<script type="text/javascript">
+
+        var myChart_proc_message_queue_max = echarts.init(document.getElementById("proc_message_queue_max"));
+            option_proc_message_queue_max = {
+            title: {
+                text: ''
+            },
+            tooltip: {},
+            legend: {
+                data:['单位(个)']
+            },
+            xAxis: {
+                data: []
+            },
+            yAxis: {},
+            series: [{
+                name: '单位(个)',
+                type: 'line',
+                data: []
+            }]
+        };
+        myChart_proc_message_queue_max.showLoading();
+        function update_proc_message_queue_max(){
+            $(document).ready(function(){
+            $.ajax({
+                    url:"/get_mstats/",
+                    type:'GET',
+                    success:function(data){
+                        myChart_proc_message_queue_max.hideLoading();
+                        Arr1 = new Array()
+                        Arr2 = new Array()
+                        for (var i=0;i<data.info.length;i++)
+                        {
+                            Arr1.push(data.info[i].mtime)
+                            Arr2.push(data.info[i].proc_message_queue.max)
+                        }
+                        myChart_proc_message_queue_max.setOption({
+                            xAxis: {
+                                data: Arr1
+                            },
+                            series: [{
+                                name: '数量',
+                                data: Arr2
+                            }]
+                        });
+                    }
+                });
+            });
+        }
+        setInterval("update_proc_message_queue_max()",5000);
+        if (option_proc_message_queue_max && typeof option_proc_message_queue_max === "object") {
+                        myChart_proc_message_queue_max.setOption(option_proc_message_queue_max, true);
+                        }
+</script>
+
+
+{#proc_heap#}
+<script type="text/javascript">
+
+        var myChart_proc_heap_max = echarts.init(document.getElementById("proc_heap_max"));
+            option_proc_heap_max = {
+            title: {
+                text: ''
+            },
+            tooltip: {},
+            legend: {
+                data:['单位(K)']
+            },
+            xAxis: {
+                data: []
+            },
+            yAxis: {},
+            series: [{
+                name: '单位(K)',
+                type: 'line',
+                data: []
+            }]
+        };
+        myChart_proc_heap_max.showLoading();
+        function update_proc_heap_max(){
+            $(document).ready(function(){
+            $.ajax({
+                    url:"/get_mstats/",
+                    type:'GET',
+                    success:function(data){
+                        myChart_proc_heap_max.hideLoading();
+                        Arr1 = new Array()
+                        Arr2 = new Array()
+                        for (var i=0;i<data.info.length;i++)
+                        {
+                            Arr1.push(data.info[i].mtime)
+                            Arr2.push(data.info[i].proc_heap.max/1000)
+                        }
+                        myChart_proc_heap_max.setOption({
+                            xAxis: {
+                                data: Arr1
+                            },
+                            series: [{
+                                name: '数量',
+                                data: Arr2
+                            }]
+                        });
+                    }
+                });
+            });
+        }
+        setInterval("update_proc_heap_max()",5000);
+        if (option_proc_heap_max && typeof option_proc_heap_max === "object") {
+                        myChart_proc_heap_max.setOption(option_proc_heap_max, true);
+                        }
+</script>
+
+
+{#error_logger#}
+<script type="text/javascript">
+
+        var myChart_error_logger_message_queue_len = echarts.init(document.getElementById("error_logger_message_queue_len"));
+            option_error_logger_message_queue_len = {
+            title: {
+                text: ''
+            },
+            tooltip: {},
+            legend: {
+                data:['单位(个)']
+            },
+            xAxis: {
+                data: []
+            },
+            yAxis: {},
+            series: [{
+                name: '单位(个)',
+                type: 'line',
+                data: []
+            }]
+        };
+        myChart_error_logger_message_queue_len.showLoading();
+        function update_error_logger_message_queue_len(){
+            $(document).ready(function(){
+            $.ajax({
+                    url:"/get_mstats/",
+                    type:'GET',
+                    success:function(data){
+                        myChart_error_logger_message_queue_len.hideLoading();
+                        Arr1 = new Array()
+                        Arr2 = new Array()
+                        for (var i=0;i<data.info.length;i++)
+                        {
+                            Arr1.push(data.info[i].mtime)
+                            Arr2.push(data.info[i].error_logger.message_queue_len)
+                        }
+                        myChart_error_logger_message_queue_len.setOption({
+                            xAxis: {
+                                data: Arr1
+                            },
+                            series: [{
+                                name: '数量',
+                                data: Arr2
+                            }]
+                        });
+                    }
+                });
+            });
+        }
+        setInterval("update_error_logger_message_queue_len()",5000);
+        if (option_error_logger_message_queue_len && typeof option_error_logger_message_queue_len === "object") {
+                        myChart_error_logger_message_queue_len.setOption(option_error_logger_message_queue_len, true);
+                        }
+</script>
+
+
+{#ports#}
+<script type="text/javascript">
+
+        var myChart_ports_count = echarts.init(document.getElementById("ports_count"));
+            option_ports_count = {
+            title: {
+                text: ''
+            },
+            tooltip: {},
+            legend: {
+                data:['单位(个)']
+            },
+            xAxis: {
+                data: []
+            },
+            yAxis: {},
+            series: [{
+                name: '单位(个)',
+                type: 'line',
+                data: []
+            }]
+        };
+        myChart_ports_count.showLoading();
+        function update_ports_count(){
+            $(document).ready(function(){
+            $.ajax({
+                    url:"/get_mstats/",
+                    type:'GET',
+                    success:function(data){
+                        myChart_ports_count.hideLoading();
+                        Arr1 = new Array()
+                        Arr2 = new Array()
+                        for (var i=0;i<data.info.length;i++)
+                        {
+                            Arr1.push(data.info[i].mtime)
+                            Arr2.push(data.info[i].ports.count)
+                        }
+                        myChart_ports_count.setOption({
+                            xAxis: {
+                                data: Arr1
+                            },
+                            series: [{
+                                name: '数量',
+                                data: Arr2
+                            }]
+                        });
+                    }
+                });
+            });
+        }
+        setInterval("update_ports_count()",5000);
+        if (option_ports_count && typeof option_ports_count === "object") {
+                        myChart_ports_count.setOption(option_ports_count, true);
+                        }
+</script>
+
+
+{#memory_alloc#}
+<script type="text/javascript">
+
+        var myChart_memory_alloc_usage = echarts.init(document.getElementById("memory_alloc_usage"));
+            option_memory_alloc_usage = {
+            title: {
+                text: ''
+            },
+            tooltip: {},
+            legend: {
+                data:['单位(个)']
+            },
+            xAxis: {
+                data: []
+            },
+            yAxis: {},
+            series: [{
+                name: '单位(个)',
+                type: 'line',
+                data: []
+            }]
+        };
+        myChart_memory_alloc_usage.showLoading();
+        function update_memory_alloc_usage(){
+            $(document).ready(function(){
+            $.ajax({
+                    url:"/get_mstats/",
+                    type:'GET',
+                    success:function(data){
+                        myChart_memory_alloc_usage.hideLoading();
+                        Arr1 = new Array()
+                        Arr2 = new Array()
+                        for (var i=0;i<data.info.length;i++)
+                        {
+                            Arr1.push(data.info[i].mtime)
+                            Arr2.push(data.info[i].memory_alloc.usage)
+                        }
+                        myChart_memory_alloc_usage.setOption({
+                            xAxis: {
+                                data: Arr1
+                            },
+                            series: [{
+                                name: '数量',
+                                data: Arr2
+                            }]
+                        });
+                    }
+                });
+            });
+        }
+        setInterval("update_memory_alloc_usage()",5000);
+        if (option_memory_alloc_usage && typeof option_memory_alloc_usage === "object") {
+                        myChart_memory_alloc_usage.setOption(option_memory_alloc_usage, true);
+                        }
+</script>
+
+
+
+
+
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts-all-3.js"></script>
+<script src="../../static/echarts.min.js"></script>
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/dataTool.min.js"></script>
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/world.js"></script>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=ZUONbpqGBsYGXNIYHicvbAbM"></script>
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script>
+<script type="text/javascript"></script>
+
+</body>
+</html>

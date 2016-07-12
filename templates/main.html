@@ -40,6 +40,7 @@
             <li><a href="#" style="color: black; font-size: 18px">其它管理</a></li>
 
       </ul>
+     <li><a href="/mstats" style="color: black; font-size: 20px">mstats</a></li>
    </li>
 {#    <li class="glyphicon glyphicon-user" style="color: rgb(0, 8, 60); font-size: 20px;"> User</li>#}
 
@@ -294,6 +295,8 @@
     });
 </script>
 
+
+{#加载的时候调用一次#}
 <script>
 {#    根据id获取设定输入框焦点离开时的操作#}
     $(document).ready(function(){
@@ -317,6 +320,8 @@
     });
 </script>
 
+
+{#点击的时候调用一次#}
 <script>
     $('#refresh_data').click(function(){
 

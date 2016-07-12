@@ -2,12 +2,20 @@
 <html>
   <head>
     <title>分区管理系统</title>
-    <!-- 包含头部信息用于适应不同设备 -->
+      <meta charset="UTF-8">
+         <!-- 包含头部信息用于适应不同设备 -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- 包含 bootstrap 样式表 -->
-    <link rel="stylesheet" href="http://apps.bdimg.com/libs/bootstrap/3.2.0/css/bootstrap.min.css">
+{#    <link rel="stylesheet" href="http://apps.bdimg.com/libs/bootstrap/3.2.0/css/bootstrap.min.css">#}
 
-      <script src="../../static/echarts.min.js"></script>
+    <link href="../../static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="../../static/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">     <!-- 布局需要的css文件 -->
+
+    <!-- 引入 ECharts 文件 -->
+    <script src="../../static/echarts.min.js"></script>
+    {#    导入jquery#}
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.0/jquery.min.js"></script>
   </head>
 
   <body>
@@ -44,10 +52,11 @@
       </div>
 
       <h2>图像</h2>
-        <div id="user_map" style="background: white; width: 590px;height:350px; margin-left: 100px"></div>
+        <div id="user_map" style="background: white; width:800px;height:500px; margin-left: 100px"></div>
+
       <p>创建项应式图片(将扩展到父元素)。 另外：图片以椭圆型展示：</p>
       <img src="../../static/cinqueterre.jpg" class="img-responsive img-circle" alt="Cinque Terre" width="304" height="236">
-
+        <div id="dynamic_data" style="background: white; width:600px;height:400px; margin-left: 100px"></div>
       <h2>图标</h2>
       <p>插入图标:</p>
       <p>云图标: <span class="glyphicon glyphicon-cloud"></span></p>
@@ -55,6 +64,8 @@
       <p>搜索图标: <span class="glyphicon glyphicon-search"></span></p>
       <p>打印图标: <span class="glyphicon glyphicon-print"></span></p>
       <p>下载图标：<span class="glyphicon glyphicon-download"></span></p>
+
+        <div id="Cloudera_Manager_Agent_CPU3" style="background: white; width:600px;height:400px; margin-left: 100px"></div>
     </div>
 
     <!-- JavaScript 放置在文档最后面可以使页面加载速度更快 -->
@@ -62,6 +73,14 @@
     <script src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script>
     <!-- 可选: 合并了 Bootstrap JavaScript 插件 -->
     <script src="http://apps.bdimg.com/libs/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts-all-3.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/dataTool.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/world.js"></script>
+       <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=ZUONbpqGBsYGXNIYHicvbAbM"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script>
+       <script type="text/javascript"></script>
 
 <script type="text/javascript">
             // 基于准备好的dom，初始化echarts实例
@@ -206,7 +225,154 @@
             };
             myChart.setOption(option);
             </script>
-  </body>
+
+<script>
+    var myChart = echarts.init(document.getElementById('dynamic_data'));
+function randomData() {
+    now = new Date(+now + oneDay);
+    value = value + Math.random() * 21 - 10;
+    return {
+        name: now.toString(),
+        value: [
+            [now.getFullYear(), now.getMonth() + 1, now.getDate()].join('-'),
+            Math.round(value)
+        ]
+    }
+}
+
+var data = [];
+var now = +new Date(1997, 9, 3);
+var oneDay = 24 * 3600 * 1000;
+var value = Math.random() * 1000;
+for (var i = 0; i < 1000; i++) {
+    data.push(randomData());
+}
+
+option = {
+    title: {
+        text: '动态数据 + 时间坐标轴'
+    },
+    tooltip: {
+        trigger: 'axis',
+        formatter: function (params) {
+            params = params[0];
+            var date = new Date(params.name);
+            return date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear() + ' : ' + params.value[1];
+        },
+        axisPointer: {
+            animation: false
+        }
+    },
+    xAxis: {
+        type: 'time',
+        splitLine: {
+            show: false
+        }
+    },
+    yAxis: {
+        type: 'value',
+        boundaryGap: [0, '100%'],
+        splitLine: {
+            show: false
+        }
+    },
+    series: [{
+        name: '模拟数据',
+        type: 'line',
+        showSymbol: false,
+        hoverAnimation: false,
+        data: data
+    }]
+};
+
+app.timeTicket = setInterval(function () {
+
+    for (var i = 0; i < 5; i++) {
+        data.shift();
+        data.push(randomData());
+    }
+
+    myChart.setOption({
+        series: [{
+            data: data
+        }]
+    });
+}, 1000);
+{#    myChart.setOption(option);#}
+</script>
+
+
+<script type="text/javascript">
+var dom = document.getElementById("Cloudera_Manager_Agent_CPU3");
+var myChart = echarts.init(dom);
+var app = {};
+option = null;
+{#var base = +new Date(2016,7,8,12,18,18);#}
+var oneDay = 24 * 3600 * 1000;
+var date = [];
+
+var data = [Math.random() * 150];
+var now = new Date();
+
+function addData(shift) {
+    now = [now.getMonth() + 1, now.getDate(),now.getHours()].join('-');
+    date.push(now);
+    data.push((Math.random() - 0.4) * 10 + data[data.length - 1]);
+    if (shift) {
+        date.shift();
+        data.shift();
+    }
+    now = new Date(Date.parse(now) + 24 * 3600 * 1000);
+}
+
+for (var i = 1; i < 10; i++) {
+    addData();
+}
+
+option = {
+    xAxis: {
+        type: 'category',
+        boundaryGap: false,
+        data: date
+    },
+    yAxis: {
+        boundaryGap: [0, '50%'],
+        type: 'value'
+    },
+    series: [
+        {
+            name:'成交',
+            type:'line',
+            smooth:true,
+            symbol: 'none',
+            stack: 'a',
+            areaStyle: {
+                normal: {}
+            },
+            data: data
+        }
+    ]
+};
+
+app.timeTicket = setInterval(function () {
+    addData(true);
+    myChart.setOption({
+        xAxis: {
+            data: date
+        },
+        series: [{
+            name:'成交',
+            data: data
+        }]
+    });
+}, 2000);
+if (option && typeof option === "object") {
+    myChart.setOption(option, true);
+}
+</script>
+
+
+</body>
 
 </html>
 

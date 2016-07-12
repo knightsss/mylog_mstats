@@ -6,6 +6,7 @@ from login.views import login,login_ajax,main
 from echarts.views import echarts,air
 from log_management.views import log_management
 from partition_management.views import partition_management
+from mstats.views import mstats,get_mstats
 admin.autodiscover()
 
 urlpatterns = patterns('',
@@ -17,6 +18,8 @@ urlpatterns = patterns('',
     url(r'^air/$',air),
     url(r'^log_management/$',log_management),
     url(r'^partition_management/$',partition_management),
+    url(r'^mstats/$',mstats),
+    url(r'^get_mstats/$',get_mstats),
 
 
     url( r'^static/(?P<path>.*)$', 'django.views.static.serve',{ 'document_root': settings.STATIC_URL }),

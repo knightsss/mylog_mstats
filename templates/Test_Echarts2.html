@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.0/jquery.min.js"></script>
+    <title>测试</title>
+</head>
+<body>
+    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+{#    <div id="main1" style="height:400px"></div>#}
+    <button  class="btn btn-lg btn-primary btn-block" ng-disabled="login_form.$invalid" id="refresh_button" type="submit"  >刷新</button>
+    <div id="main" style="height:300px;width: 400px"></div>
+
+    <div id="run" style="height:300px;width: 400px"></div>
+    <!-- ECharts单文件引入 -->
+    <script src="../../static/echarts/build/dist/echarts-all.js"></script>
+    <script src="../../static/echarts.min.js"></script>
+
+{#    以下是动态加载的效果#}
+    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts-all-3.js"></script>
+    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/dataTool.min.js"></script>
+    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>
+    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/world.js"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=ZUONbpqGBsYGXNIYHicvbAbM"></script>
+    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script>
+
+
+<script type="text/javascript">
+
+var dom1 = document.getElementById("main");
+var myChart1 = echarts.init(dom1);
+var app1 = {};
+option1 = null;
+    option1 = {
+    title: {
+        text: '网络IO'
+    },
+    tooltip: {},
+    legend: {
+        data:['数量(万)']
+    },
+    xAxis: {
+        data: []
+    },
+    yAxis: {},
+    series: [{
+        name: '数量(万)',
+        type: 'line',
+        data: []
+    }]
+};
+
+{#        $('#refresh_button').click(function(){#}
+        myChart1.showLoading();
+        $(document).ready(function(){
+        $.ajax({
+                url:"/test_mstats/",
+                type:'GET',
+{#                返回json格式的数据#}
+                success:function(data){
+                    myChart1.hideLoading();
+{#                    创建两个数组#}
+                    Arr1 = new Array()
+                    Arr2 = new Array()
+{#                    遍历数组并添加值#}
+                    for (var i=0;i<data.info.length;i++)
+                    {
+                        Arr1.push(data.info[i].mtime)
+                        Arr2.push(data.info[i].time.wall/10000)
+                    }
+
+                    myChart1.setOption({
+                        xAxis: {
+                            data: Arr1
+                        },
+                        series: [{
+                                // 根据名字对应到相应的系列
+                            name: '数量',
+                            data: Arr2
+                        }]
+                    });
+                }
+            });
+    });
+    if (option1 && typeof option1 === "object") {
+                    myChart1.setOption(option1, true);
+                    }
+</script>
+
+
+
+<script type="text/javascript">
+
+var dom = document.getElementById("run");
+var myChart = echarts.init(dom);
+var app = {};
+option = null;
+    option = {
+    title: {
+        text: '磁盘IO'
+    },
+    tooltip: {},
+    legend: {
+        data:['数量(万)']
+    },
+    xAxis: {
+        data: []
+    },
+    yAxis: {},
+    series: [{
+        name: '数量(万)',
+        type: 'line',
+        data: []
+    }]
+};
+
+{#        $('#refresh_button').click(function(){#}
+        myChart.showLoading();
+        $(document).ready(function(){
+        $.ajax({
+                url:"/test_mstats/",
+                type:'GET',
+{#                返回json格式的数据#}
+                success:function(data){
+                    myChart.hideLoading();
+{#                    创建两个数组#}
+                    Arr1 = new Array()
+                    Arr2 = new Array()
+{#                    遍历数组并添加值#}
+                    for (var i=0;i<data.info.length;i++)
+                    {
+                        Arr1.push(data.info[i].mtime)
+                        Arr2.push(data.info[i].time.run/10000)
+                    }
+
+                    myChart.setOption({
+                        xAxis: {
+                            data: Arr1
+                        },
+                        series: [{
+                                // 根据名字对应到相应的系列
+                            name: '数量',
+                            data: Arr2
+                        }]
+                    });
+                }
+            });
+    });
+    if (option && typeof option === "object") {
+                    myChart.setOption(option, true);
+                    }
+</script>
+
+<script type="text/javascript">
+
+        // 基于准备好的dom，初始化echarts图表
+{#        var myChart = echarts.init(document.getElementById('main'));#}
+var dom = document.getElementById("main1");
+var myChart = echarts.init(dom);
+var app = {};
+option = null;
+function fetchData(cb) {
+    // 通过 setTimeout 模拟异步加载
+    setTimeout(function () {
+        cb({
+            categories: ["衬衫","羊毛衫","雪纺衫","裤子","高跟鞋","袜子"],
+            data: [5, 20, 36, 10, 10, 20]
+        });
+    }, 3000);
+}
+
+// 初始 option
+option = {
+    title: {
+        text: '异步数据加载示例'
+    },
+    tooltip: {},
+    legend: {
+        data: ['销量']
+    },
+    xAxis: {
+        data: []
+    },
+    yAxis: {},
+    series: [{
+        name: '销量',
+        type: 'line',
+        data: []
+    }]
+};
+myChart.showLoading();
+fetchData(function (data) {
+    myChart.hideLoading();
+    myChart.setOption({
+        xAxis: {
+            data: data.categories
+        },
+        series: [{
+            // 根据名字对应到相应的系列
+            name: '销量',
+            data: data.data
+        }]
+    });
+});;
+if (option && typeof option === "object") {
+    myChart.setOption(option, true);}
+    </script>
+
+<script type="text/javascript">
+
+    var dom1 = document.getElementById("dynatic");
+    var myChart1 = echarts.init(dom1);
+    var app1 = {};
+    option1 = null;
+
+    option1 = {
+    title : {
+        text: '动态数据',
+        subtext: '纯属虚构'
+    },
+    tooltip : {
+        trigger: 'axis'
+    },
+    legend: {
+        data:['最新成交价', '预购队列']
+    },
+    toolbox: {
+        show : true,
+        feature : {
+            mark : {show: true},
+            dataView : {show: true, readOnly: false},
+            magicType : {show: true, type: ['line', 'bar']},
+            restore : {show: true},
+            saveAsImage : {show: true}
+        }
+    },
+    dataZoom : {
+        show : false,
+        start : 0,
+        end : 100
+    },
+    xAxis : [
+        {
+            type : 'category',
+            boundaryGap : true,
+            data : (function (){
+                var now = new Date();
+                var res = [];
+                var len = 10;
+                while (len--) {
+                    res.unshift(now.toLocaleTimeString().replace(/^\D*/,''));
+                    now = new Date(now - 2000);
+                }
+                return res;
+            })()
+        },
+        {
+            type : 'category',
+            boundaryGap : true,
+            data : (function (){
+                var res = [];
+                var len = 10;
+                while (len--) {
+                    res.push(len + 1);
+                }
+                return res;
+            })()
+        }
+    ],
+    yAxis : [
+        {
+            type : 'value',
+            scale: true,
+            name : '价格',
+            boundaryGap: [0.2, 0.2]
+        },
+        {
+            type : 'value',
+            scale: true,
+            name : '预购量',
+            boundaryGap: [0.2, 0.2]
+        }
+    ],
+    series : [
+        {
+            name:'预购队列',
+            type:'bar',
+            xAxisIndex: 1,
+            yAxisIndex: 1,
+            data:(function (){
+                var res = [];
+                var len = 10;
+                while (len--) {
+                    res.push(Math.round(Math.random() * 1000));
+                }
+                return res;
+            })()
+        },
+        {
+            name:'最新成交价',
+            type:'line',
+            data:(function (){
+                var res = [];
+                var len = 10;
+                while (len--) {
+                    res.push((Math.random()*10 + 5).toFixed(1) - 0);
+                }
+                return res;
+            })()
+        }
+    ]
+};
+var lastData = 11;
+var axisData;
+clearInterval(timeTicket);
+timeTicket = setInterval(function (){
+    lastData += Math.random() * ((Math.round(Math.random() * 10) % 2) == 0 ? 1 : -1);
+    lastData = lastData.toFixed(1) - 0;
+    axisData = (new Date()).toLocaleTimeString().replace(/^\D*/,'');
+
+    // 动态数据接口 addData
+    myChart1.addData([
+        [
+            0,        // 系列索引
+            Math.round(Math.random() * 1000), // 新增数据
+            true,     // 新增数据是否从队列头部插入
+            false     // 是否增加队列长度，false则自定删除原有数据，队头插入删队尾，队尾插入删队头
+        ],
+        [
+            1,        // 系列索引
+            lastData, // 新增数据
+            false,    // 新增数据是否从队列头部插入
+            false,    // 是否增加队列长度，false则自定删除原有数据，队头插入删队尾，队尾插入删队头
+            axisData  // 坐标轴标签
+        ]
+    ]);
+}, 2100);
+
+    if (option1 && typeof option1 === "object") {
+    myChart1.setOption(option1, true);
+}
+
+</script>
+</body>
+</html>
